@@ -1,0 +1,35 @@
+baseURL: "https://kalyaannnn.github.io/"
+title: "Kalyaan Rao"
+theme: "PaperMod"
+pagination:
+  pagerSize: 8
+
+params:
+  ShowReadingTime: true
+  ShowToc: true
+  TocOpen: true
+  ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
+
+  profileMode:
+    enabled: true
+    title: "Kalyaan Rao"
+    subtitle: "M.S. Data Science @ NYU. Learning dynamics, SLT, non-equilibrium SGD."
+    buttons:
+      - name: "Posts"
+        url: "/posts/"
+
+  socialIcons:
+    - name: email
+      url: "mailto:kmr9800@nyu.edu"
+    - name: github
+      url: "https://github.com/kalyaannnn"
+
+menu:
+  main:
+    - name: Posts
+      url: /posts/
+      weight: 10
+    - name: About
+      url: /about/
+      weight: 20
