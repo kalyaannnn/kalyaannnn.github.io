@@ -13,6 +13,9 @@ params:
   # Math rendering
   math: true
   
+  # Disable Google Analytics
+  googleAnalytics: ""
+  
   # Home page settings
   homeInfoParams:
     Title: ""
