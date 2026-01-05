@@ -15,4 +15,17 @@
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
+<script>
+  window.addEventListener('load', function() {
+    if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
+      window.MathJax.startup.promise.then(function() {
+        if (window.MathJax.typesetPromise) {
+          return window.MathJax.typesetPromise();
+        }
+      }).catch(function(err) {
+        console.error('MathJax error:', err);
+      });
+    }
+  });
+</script>
 {{ end }}
