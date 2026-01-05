@@ -3,6 +3,13 @@ languageCode: 'en-us'
 title: 'Kalyaan Rao'
 theme: PaperMod
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
 params:
   env: production
   title: 'Kalyaan Rao'
