@@ -1,0 +1,59 @@
+baseURL: 'https://kalyaannnn.github.io/'
+languageCode: 'en-us'
+title: 'Kalyaan Rao'
+theme: PaperMod
+
+params:
+  env: production
+  title: 'Kalyaan Rao'
+  description: ''
+  author: Kalyaan Rao
+  keywords: [Blog, Portfolio, PaperMod]
+  
+  # Math rendering
+  math: true
+  
+  # Home page settings
+  homeInfoParams:
+    Title: ""
+    Content: ""
+  
+  # Menu
+  ShowReadingTime: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: true
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: true
+  tocopen: false
+
+  # Social links
+  socialIcons:
+    - name: github
+      url: "https://github.com/kalyaannnn"
+    - name: email
+      url: "mailto:kmr9800@nyu.edu"
+
+menu:
+  main:
+    - identifier: posts
+      name: Posts
+      url: /posts/
+      weight: 10
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 20
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
