@@ -15,5 +15,11 @@
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.MathJax) {
+      MathJax.typesetPromise();
+    }
+  });
+</script>
 {{ end }}
-<link rel="stylesheet" href="{{ "css/custom.css" | relURL }}">
