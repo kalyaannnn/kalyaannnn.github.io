@@ -5,10 +5,28 @@
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
       processEscapes: true,
-      processEnvironments: true
+      processEnvironments: true,
+      tags: 'ams'
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      ignoreHtmlClass: 'tex2jax_ignore',
+      processHtmlClass: 'tex2jax_process'
+    },
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+        MathJax.startup.promise.then(() => {
+          console.log('MathJax is ready');
+          if (MathJax.typesetPromise) {
+            MathJax.typesetPromise().then(() => {
+              console.log('MathJax rendering complete');
+            }).catch((err) => {
+              console.error('MathJax typeset error:', err);
+            });
+          }
+        });
+      }
     }
   };
 </script>
@@ -16,22 +34,25 @@
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      MathJax.typesetPromise().then(function() {
-        console.log('MathJax rendering complete');
-      }).catch(function(err) {
-        console.error('MathJax error:', err);
-      });
-    }
-  });
-  
+  // Fallback: ensure typesetting happens after MathJax loads
   window.addEventListener('load', function() {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      // Retry typesetting after page load
-      MathJax.typesetPromise().catch(function(err) {
-        console.error('MathJax load error:', err);
+    if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
+      window.MathJax.startup.promise.then(function() {
+        if (window.MathJax.typesetPromise) {
+          return window.MathJax.typesetPromise();
+        }
+      }).then(function() {
+        console.log('MathJax typeset complete after load');
+      }).catch(function(err) {
+        console.error('MathJax error after load:', err);
       });
+    } else if (window.MathJax && window.MathJax.typesetPromise) {
+      // Fallback for older MathJax versions
+      setTimeout(function() {
+        window.MathJax.typesetPromise().catch(function(err) {
+          console.error('MathJax fallback error:', err);
+        });
+      }, 1000);
     }
   });
 </script>
