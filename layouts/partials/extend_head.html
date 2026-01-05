@@ -9,17 +9,23 @@
     },
     options: {
       skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    startup: {
-      ready: () => {
-        MathJax.startup.defaultReady();
-        MathJax.startup.document.state(0);
-        MathJax.typesetPromise();
-      }
     }
   };
 </script>
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+<script>
+  window.addEventListener('load', function() {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      // Process math-display divs
+      document.querySelectorAll('.math-display').forEach(function(div) {
+        div.innerHTML = '\\[' + div.textContent.trim() + '\\]';
+      });
+      MathJax.typesetPromise().catch(function(err) {
+        console.error('MathJax error:', err);
+      });
+    }
+  });
 </script>
 {{ end }}

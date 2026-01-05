@@ -33,19 +33,19 @@ if we only know our location up to measurement noise, steep directions pin us do
 curvature determines how fast this volume shrinks as we collect more data.
 
 we observe a dataset
-\[
+<div class="math-display">
 D_n = \{(x_i, y_i)\}_{i=1}^n
-\]
+</div>
 of size $n$. a model is parameterized by $\theta \in \mathbb{R}^d$ with prior distribution $\pi(\theta)$.
 
 the likelihood is
-\[
+<div class="math-display">
 p(D_n \mid \theta) = \prod_{i=1}^n p(y_i \mid x_i, \theta),
-\]
+</div>
 and the marginal likelihood (evidence) is
-\[
+<div class="math-display">
 p(D_n) = \int p(D_n \mid \theta)\, \pi(\theta)\, d\theta.
-\]
+</div>
 
 throughout this post, we consider the asymptotic regime where the sample size $n$ grows while the model class is fixed.
 
@@ -63,12 +63,12 @@ for large sample size $n$, the marginal likelihood is approximated using laplace
 - integrating a gaussian in $d$ dimensions yields a volume factor
 
 writing $H_n$ for the hessian of the negative log posterior at $\hat{\theta}$,
-\[
+<div class="math-display">
 \log p(D_n)
 \approx
 \log p(D_n \mid \hat{\theta})
 - \tfrac{1}{2} \log \det H_n + O(1).
-\]
+</div>
 
 at this point, it is useful to introduce the fisher information. it measures how sensitive the likelihood is to small parameter changes:
 
@@ -76,22 +76,22 @@ at this point, it is useful to introduce the fisher information. it measures how
 - small fisher information means predictions barely change
 
 in regular models, the fisher information matrix is full rank. mathematically,
-\[
+<div class="math-display">
 H_n \approx n\, I(\theta^\star),
-\]
+</div>
 where $I(\theta^\star)$ is the fisher information at a kl minimizer.
 
 if $I(\theta^\star)$ is full rank with dimension $d$,
-\[
+<div class="math-display">
 \log \det H_n \sim d \log n,
-\]
+</div>
 leading to
-\[
+<div class="math-display">
 \log p(D_n)
 \approx
 \log p(D_n \mid \hat{\theta})
 - \frac{d}{2} \log n + O(1),
-\]
+</div>
 which is the bayesian information criterion (bic).
 
 crucially, this derivation assumes every parameter direction contributes curvature. if some directions are flat, this scaling breaks.
@@ -116,9 +116,9 @@ this error scales as $\log n$, so it diverges with more data. to see this explic
 ## 4. a minimal example: rank-deficient linear regression
 
 consider the linear–gaussian model
-\[
+<div class="math-display">
 y_i = x_i^\top B\theta + \varepsilon_i, \qquad \varepsilon_i \sim \mathcal N(0, \sigma^2),
-\]
+</div>
 with prior $\theta \sim \mathcal N(0, \tau^2 I_d)$.
 
 here:
@@ -135,7 +135,7 @@ if $\mathrm{rank}(B) = r < d$, only an $r$-dimensional projection of $\theta$ af
 ### 4.1 exact marginal likelihood
 
 because the model is gaussian, the marginal likelihood is exact. writing $A_n = X_n B$ and $S_n = A_n^\top A_n$,
-\[
+<div class="math-display">
 \log p(D_n)
 =
 -\tfrac{1}{2}\Big(
@@ -144,7 +144,7 @@ n\log(2\pi)
 + \log \det(I + \alpha S_n)
 + \text{data-fit terms}
 \Big),
-\]
+</div>
 with $\alpha = \tau^2/\sigma^2$.
 
 the spectrum of $S_n$ has:
@@ -154,24 +154,24 @@ the spectrum of $S_n$ has:
 
 ### 4.2 effective dimension from eigenvalues
 
-\[
+<div class="math-display">
 \log \det(I + \alpha S_n)
 = r \log n + O(1),
-\]
+</div>
 so
-\[
+<div class="math-display">
 \log p(D_n)
 =
 \log p(D_n \mid \theta^\star)
 - \frac{r}{2} \log n + O(1).
-\]
+</div>
 
 ### 4.3 quantifying the bic error
 
 bic predicts a penalty of $\frac{d}{2} \log n$. the error is
-\[
+<div class="math-display">
 \Big(\frac{d}{2} - \frac{r}{2}\Big)\log n + O(1),
-\]
+</div>
 which diverges as $n$ grows.
 
 ---
@@ -185,15 +185,15 @@ which diverges as $n$ grows.
 laplace's method and bic assume the model is *regular*: the fisher information is full rank, the posterior concentrates at a unique point, and every parameter direction contributes curvature. many modern models violate this.
 
 mixture models, neural networks, and low-rank representations all exhibit redundant parameters and flat directions in the likelihood. in such *singular* models, the set of kl minimizers
-\[
+<div class="math-display">
 \{\theta : \mathrm{KL}(p^* \| p_\theta) = 0\}
-\]
+</div>
 can have nontrivial geometry—curves, surfaces, or more complex singularities—rather than being isolated points.
 
 singular learning theory (slt), developed by watanabe, shows that in these models the marginal likelihood is governed by the *real log canonical threshold* (rlct) $\lambda$, a birational invariant that measures the local singularity structure:
-\[
+<div class="math-display">
 \log p(D_n) = \log p(D_n \mid \theta^*) - \lambda \log n + (m-1)\log\log n + O(1),
-\]
+</div>
 where $m \in \mathbb{N}$ is the multiplicity. for regular models, $\lambda = d/2$ and $m = 1$, recovering bic. for singular models, typically $\lambda < d/2$.
 
 the key insight is that effective complexity depends on the intrinsic geometry of the likelihood—not on the number of coordinates used to describe it.
@@ -203,12 +203,12 @@ the key insight is that effective complexity depends on the intrinsic geometry o
 ## 6. effective dimension and the real log canonical threshold (rlct)
 
 slt shows that
-\[
+<div class="math-display">
 \log p(D_n)
 =
 \log p(D_n \mid \theta^\star)
 - \lambda \log n + O(\log \log n).
-\]
+</div>
 
 $\lambda$, the rlct, is a coordinate-free effective dimension.
 
@@ -237,40 +237,40 @@ model complexity is a geometric property of the likelihood, not a bookkeeping ex
 this appendix records the exact marginal likelihood calculation underlying section 4, and explains why the leading $\log n$ term depends on intrinsic rank rather than parameter count.
 
 we consider the linear–gaussian regression model
-\[
+<div class="math-display">
 y_i = x_i^\top B\theta + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2),
-\]
+</div>
 with prior $\theta \sim \mathcal{N}(0, \tau^2 I_d)$. writing $X_n \in \mathbb{R}^{n \times p}$ for the design matrix and
-\[
+<div class="math-display">
 A_n := X_n B \in \mathbb{R}^{n \times d},
-\]
+</div>
 the likelihood can be written compactly as
-\[
+<div class="math-display">
 p(y \mid \theta) = \mathcal{N}(y \mid A_n \theta, \sigma^2 I_n).
-\]
+</div>
 
 because both likelihood and prior are gaussian, the marginal likelihood can be computed in closed form by integrating out $\theta$. a standard gaussian completion of the square yields
-\[
+<div class="math-display">
 p(y) = \mathcal{N}(y \mid 0, \sigma^2 I_n + \tau^2 A_n A_n^\top).
-\]
+</div>
 
 taking logarithms, the log evidence is
-\[
+<div class="math-display">
 \log p(D_n) = -\frac{1}{2}\Big(n \log(2\pi) + n \log \sigma^2 + \log \det(I_d + \alpha S_n) + \text{data-fit terms}\Big),
-\]
+</div>
 where
-\[
+<div class="math-display">
 S_n := A_n^\top A_n, \quad \alpha := \tau^2 / \sigma^2.
-\]
+</div>
 
 the key object controlling the complexity penalty is the gram matrix $S_n$.
 
 ### spectrum and intrinsic rank
 
 assume the rows $x_i$ are i.i.d. with nondegenerate covariance $\Sigma_x$, and that $\mathrm{rank}(B) = r < d$. then
-\[
+<div class="math-display">
 \frac{1}{n} S_n = \frac{1}{n} B^\top X_n^\top X_n B \longrightarrow B^\top \Sigma_x B \quad \text{almost surely}.
-\]
+</div>
 
 as a consequence:
 
@@ -278,24 +278,24 @@ as a consequence:
 - the remaining $d - r$ eigenvalues remain $O(1)$
 
 taking determinants,
-\[
+<div class="math-display">
 \log \det(I_d + \alpha S_n) = \sum_{j=1}^{r} \log(\alpha n \lambda_j + 1) + O(1) = r \log n + O(1).
-\]
+</div>
 
 substituting back, the leading asymptotic form of the evidence is
-\[
+<div class="math-display">
 \log p(D_n) = \log p(D_n \mid \theta^\star) - \frac{r}{2} \log n + O(1).
-\]
+</div>
 
 this shows explicitly that the effective dimension of the model is $r$, not the ambient parameter count $d$. in the language of singular learning theory, the real log canonical threshold (rlct) is
-\[
+<div class="math-display">
 \lambda = r/2.
-\]
+</div>
 
 by contrast, laplace's approximation (and bic) always insert $d/2$ in place of $\lambda$, leading to a systematic error of
-\[
+<div class="math-display">
 \Big(\frac{d}{2} - \frac{r}{2}\Big) \log n
-\]
+</div>
 in singular models. this is the precise sense in which bic "over-penalizes" overparameterized representations.
 
 ---
