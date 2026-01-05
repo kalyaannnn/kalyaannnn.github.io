@@ -12,8 +12,10 @@ markup:
       attribute:
         block: true
         title: true
+      autoHeadingID: true
   highlight:
     noClasses: false
+    codeFences: true
 
 params:
   env: production

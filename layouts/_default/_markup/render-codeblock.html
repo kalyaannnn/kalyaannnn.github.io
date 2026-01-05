@@ -1,0 +1,10 @@
+{{- $lang := .Type -}}
+{{- $code := .Inner -}}
+{{- if eq $lang "math" -}}
+<div class="math-display">
+\[{{ $code }}\]
+</div>
+{{- else -}}
+<pre><code class="language-{{ $lang }}">{{ $code }}</code></pre>
+{{- end -}}
+

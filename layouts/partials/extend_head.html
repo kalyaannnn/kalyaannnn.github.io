@@ -16,14 +16,21 @@
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise().then(function() {
+        console.log('MathJax rendering complete');
+      }).catch(function(err) {
+        console.error('MathJax error:', err);
+      });
+    }
+  });
+  
   window.addEventListener('load', function() {
     if (window.MathJax && window.MathJax.typesetPromise) {
-      // Process math-display divs
-      document.querySelectorAll('.math-display').forEach(function(div) {
-        div.innerHTML = '\\[' + div.textContent.trim() + '\\]';
-      });
+      // Retry typesetting after page load
       MathJax.typesetPromise().catch(function(err) {
-        console.error('MathJax error:', err);
+        console.error('MathJax load error:', err);
       });
     }
   });
