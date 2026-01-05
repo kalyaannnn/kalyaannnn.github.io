@@ -18,34 +18,47 @@
 <script>
   // Wait for MathJax to load and then typeset
   (function() {
-    var script = document.getElementById('MathJax-script');
-    if (script) {
-      script.addEventListener('load', function() {
-        if (window.MathJax && window.MathJax.startup) {
-          window.MathJax.startup.promise.then(function() {
-            if (window.MathJax.typesetPromise) {
-              return window.MathJax.typesetPromise();
-            }
-          }).then(function() {
-            console.log('MathJax rendering complete');
-          }).catch(function(err) {
-            console.error('MathJax error:', err);
-          });
-        }
-      });
+    function typesetMath() {
+      if (window.MathJax && window.MathJax.startup) {
+        window.MathJax.startup.promise.then(function() {
+          if (window.MathJax.typesetPromise) {
+            return window.MathJax.typesetPromise();
+          }
+        }).then(function() {
+          console.log('MathJax rendering complete');
+        }).catch(function(err) {
+          console.error('MathJax error:', err);
+        });
+      } else if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise().then(function() {
+          console.log('MathJax typeset complete (direct)');
+        }).catch(function(err) {
+          console.error('MathJax direct error:', err);
+        });
+      }
     }
     
-    // Fallback: try to typeset after page load
+    var script = document.getElementById('MathJax-script');
+    if (script) {
+      if (script.complete || script.readyState === 'complete') {
+        // Script already loaded
+        setTimeout(typesetMath, 100);
+      } else {
+        script.addEventListener('load', typesetMath);
+      }
+    }
+    
+    // Fallback: try to typeset after DOM and page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(typesetMath, 500);
+      });
+    } else {
+      setTimeout(typesetMath, 500);
+    }
+    
     window.addEventListener('load', function() {
-      setTimeout(function() {
-        if (window.MathJax && window.MathJax.typesetPromise) {
-          window.MathJax.typesetPromise().then(function() {
-            console.log('MathJax typeset complete (fallback)');
-          }).catch(function(err) {
-            console.error('MathJax fallback error:', err);
-          });
-        }
-      }, 500);
+      setTimeout(typesetMath, 1000);
     });
   })();
 </script>

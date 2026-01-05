@@ -1,0 +1,37 @@
+title: Kalyaan Rao
+author: Kalyaan Rao
+email: kmr9800@nyu.edu
+description: 
+show_excerpts: false
+
+paginate: 5
+paginate_path: "/blog/page:num/"
+
+tag_permalink_style: pretty
+tag_page_layout: tag_page
+tag_page_dir: tag
+
+dash:
+  date_format: "%b %-d, %Y"
+  
+  disqus:
+    shortname: 
+  
+  social_links:
+    - url: https://github.com/kalyaannnn
+      icon: github-square
+      color: purple
+    - url: mailto:kmr9800@nyu.edu
+      icon: envelope
+      color: blue
+  
+  show_author: true
+  animation_speed: 50
+  rtl: false
+
+plugins:
+ - jekyll-feed
+ - jekyll-seo-tag
+ - jekyll-paginate
+ - liquid-md5
+ - jekyll/tagging
