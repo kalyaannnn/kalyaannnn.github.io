@@ -33,17 +33,17 @@ if we only know our location up to measurement noise, steep directions pin us do
 curvature determines how fast this volume shrinks as we collect more data.
 
 we observe a dataset
-\]
+\[
 D_n = \{(x_i, y_i)\}_{i=1}^n
 \]
 of size $n$. a model is parameterized by $\theta \in \mathbb{R}^d$ with prior distribution $\pi(\theta)$.
 
 the likelihood is
-\]
+\[
 p(D_n \mid \theta) = \prod_{i=1}^n p(y_i \mid x_i, \theta),
 \]
 and the marginal likelihood (evidence) is
-\]
+\[
 p(D_n) = \int p(D_n \mid \theta)\, \pi(\theta)\, d\theta.
 \]
 
@@ -63,7 +63,7 @@ for large sample size $n$, the marginal likelihood is approximated using laplace
 - integrating a gaussian in $d$ dimensions yields a volume factor
 
 writing $H_n$ for the hessian of the negative log posterior at $\hat{\theta}$,
-\]
+\[
 \log p(D_n)
 \approx
 \log p(D_n \mid \hat{\theta})
@@ -76,17 +76,17 @@ at this point, it is useful to introduce the fisher information. it measures how
 - small fisher information means predictions barely change
 
 in regular models, the fisher information matrix is full rank. mathematically,
-\]
+\[
 H_n \approx n\, I(\theta^\star),
 \]
 where $I(\theta^\star)$ is the fisher information at a kl minimizer.
 
 if $I(\theta^\star)$ is full rank with dimension $d$,
-\]
+\[
 \log \det H_n \sim d \log n,
 \]
 leading to
-\]
+\[
 \log p(D_n)
 \approx
 \log p(D_n \mid \hat{\theta})
@@ -116,7 +116,7 @@ this error scales as $\log n$, so it diverges with more data. to see this explic
 ## 4. a minimal example: rank-deficient linear regression
 
 consider the linear–gaussian model
-\]
+\[
 y_i = x_i^\top B\theta + \varepsilon_i, \qquad \varepsilon_i \sim \mathcal N(0, \sigma^2),
 \]
 with prior $\theta \sim \mathcal N(0, \tau^2 I_d)$.
@@ -135,7 +135,7 @@ if $\mathrm{rank}(B) = r < d$, only an $r$-dimensional projection of $\theta$ af
 ### 4.1 exact marginal likelihood
 
 because the model is gaussian, the marginal likelihood is exact. writing $A_n = X_n B$ and $S_n = A_n^\top A_n$,
-\]
+\[
 \log p(D_n)
 =
 -\tfrac{1}{2}\Big(
@@ -154,12 +154,12 @@ the spectrum of $S_n$ has:
 
 ### 4.2 effective dimension from eigenvalues
 
-\]
+\[
 \log \det(I + \alpha S_n)
 = r \log n + O(1),
 \]
 so
-\]
+\[
 \log p(D_n)
 =
 \log p(D_n \mid \theta^\star)
@@ -169,7 +169,7 @@ so
 ### 4.3 quantifying the bic error
 
 bic predicts a penalty of $\frac{d}{2} \log n$. the error is
-\]
+\[
 \Big(\frac{d}{2} - \frac{r}{2}\Big)\log n + O(1),
 \]
 which diverges as $n$ grows.
@@ -185,13 +185,13 @@ which diverges as $n$ grows.
 laplace's method and bic assume the model is *regular*: the fisher information is full rank, the posterior concentrates at a unique point, and every parameter direction contributes curvature. many modern models violate this.
 
 mixture models, neural networks, and low-rank representations all exhibit redundant parameters and flat directions in the likelihood. in such *singular* models, the set of kl minimizers
-\]
+\[
 \{\theta : \mathrm{KL}(p^* \| p_\theta) = 0\}
 \]
 can have nontrivial geometry—curves, surfaces, or more complex singularities—rather than being isolated points.
 
 singular learning theory (slt), developed by watanabe, shows that in these models the marginal likelihood is governed by the *real log canonical threshold* (rlct) $\lambda$, a birational invariant that measures the local singularity structure:
-\]
+\[
 \log p(D_n) = \log p(D_n \mid \theta^*) - \lambda \log n + (m-1)\log\log n + O(1),
 \]
 where $m \in \mathbb{N}$ is the multiplicity. for regular models, $\lambda = d/2$ and $m = 1$, recovering bic. for singular models, typically $\lambda < d/2$.
@@ -203,7 +203,7 @@ the key insight is that effective complexity depends on the intrinsic geometry o
 ## 6. effective dimension and the real log canonical threshold (rlct)
 
 slt shows that
-\]
+\[
 \log p(D_n)
 =
 \log p(D_n \mid \theta^\star)
@@ -237,29 +237,29 @@ model complexity is a geometric property of the likelihood, not a bookkeeping ex
 this appendix records the exact marginal likelihood calculation underlying section 4, and explains why the leading $\log n$ term depends on intrinsic rank rather than parameter count.
 
 we consider the linear–gaussian regression model
-\]
+\[
 y_i = x_i^\top B\theta + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2),
 \]
 with prior $\theta \sim \mathcal{N}(0, \tau^2 I_d)$. writing $X_n \in \mathbb{R}^{n \times p}$ for the design matrix and
-\]
+\[
 A_n := X_n B \in \mathbb{R}^{n \times d},
 \]
 the likelihood can be written compactly as
-\]
+\[
 p(y \mid \theta) = \mathcal{N}(y \mid A_n \theta, \sigma^2 I_n).
 \]
 
 because both likelihood and prior are gaussian, the marginal likelihood can be computed in closed form by integrating out $\theta$. a standard gaussian completion of the square yields
-\]
+\[
 p(y) = \mathcal{N}(y \mid 0, \sigma^2 I_n + \tau^2 A_n A_n^\top).
 \]
 
 taking logarithms, the log evidence is
-\]
+\[
 \log p(D_n) = -\frac{1}{2}\Big(n \log(2\pi) + n \log \sigma^2 + \log \det(I_d + \alpha S_n) + \text{data-fit terms}\Big),
 \]
 where
-\]
+\[
 S_n := A_n^\top A_n, \quad \alpha := \tau^2 / \sigma^2.
 \]
 
@@ -268,7 +268,7 @@ the key object controlling the complexity penalty is the gram matrix $S_n$.
 ### spectrum and intrinsic rank
 
 assume the rows $x_i$ are i.i.d. with nondegenerate covariance $\Sigma_x$, and that $\mathrm{rank}(B) = r < d$. then
-\]
+\[
 \frac{1}{n} S_n = \frac{1}{n} B^\top X_n^\top X_n B \longrightarrow B^\top \Sigma_x B \quad \text{almost surely}.
 \]
 
@@ -278,22 +278,22 @@ as a consequence:
 - the remaining $d - r$ eigenvalues remain $O(1)$
 
 taking determinants,
-\]
+\[
 \log \det(I_d + \alpha S_n) = \sum_{j=1}^{r} \log(\alpha n \lambda_j + 1) + O(1) = r \log n + O(1).
 \]
 
 substituting back, the leading asymptotic form of the evidence is
-\]
+\[
 \log p(D_n) = \log p(D_n \mid \theta^\star) - \frac{r}{2} \log n + O(1).
 \]
 
 this shows explicitly that the effective dimension of the model is $r$, not the ambient parameter count $d$. in the language of singular learning theory, the real log canonical threshold (rlct) is
-\]
+\[
 \lambda = r/2.
 \]
 
 by contrast, laplace's approximation (and bic) always insert $d/2$ in place of $\lambda$, leading to a systematic error of
-\]
+\[
 \Big(\frac{d}{2} - \frac{r}{2}\Big) \log n
 \]
 in singular models. this is the precise sense in which bic "over-penalizes" overparameterized representations.
