@@ -1,25 +1,35 @@
 {{ if or .Params.math .Site.Params.math }}
 <script>
-  MathJax = {
+  window.MathJax = {
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$', '$$'], ['\\[', '\\]']],
       processEscapes: true,
-      processEnvironments: true
+      processEnvironments: true,
+      autoload: {
+        color: [],
+        colorv2: ['color']
+      },
+      packages: {'[+]': ['base', 'ams', 'newcommand', 'configMacros', 'autoload']}
     },
     options: {
-      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+      ignoreHtmlClass: 'tex2jax_ignore',
+      processHtmlClass: 'tex2jax_process'
+    },
+    loader: {
+      load: ['[tex]/ams', '[tex]/newcommand', '[tex]/configMacros']
+    },
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+        MathJax.startup.document.state(0);
+        MathJax.typesetPromise();
+      }
     }
   };
 </script>
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.MathJax) {
-      MathJax.typesetPromise();
-    }
-  });
 </script>
 {{ end }}
