@@ -1,0 +1,36 @@
+/* Custom CSS for math and font sizing */
+mjx-container {
+  font-size: 1em !important;
+}
+
+mjx-container[display="true"] {
+  font-size: 1.1em !important;
+  margin: 1em 0 !important;
+  display: block !important;
+}
+
+/* Fix for large fonts in general */
+.post-content {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.post-content h1, .post-content h2, .post-content h3, .post-content h4 {
+  font-size: 1.5em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.post-content h2 {
+  font-size: 1.3em;
+}
+
+.post-content h3 {
+  font-size: 1.15em;
+}
+
+/* Ensure math displays properly */
+.MathJax, .MathJax_Display {
+  font-size: 1em !important;
+}
+

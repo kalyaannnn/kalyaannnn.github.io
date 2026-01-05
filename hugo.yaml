@@ -60,3 +60,7 @@ outputs:
     - HTML
     - RSS
     - JSON
+
+assets:
+  - path: css/custom.css
+    mime: text/css
