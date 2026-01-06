@@ -133,17 +133,11 @@ if $\mathrm{rank}(B) = r < d$, only an $r$-dimensional projection of $\theta$ af
 ### 4.1 exact marginal likelihood
 
 because the model is gaussian, the marginal likelihood is exact. writing $A_n = X_n B$ and $S_n = A_n^\top A_n$,
+
 $$
-\begin{aligned}
-\log p(D_n)
-&= -\tfrac{1}{2}\Big(
-&\quad n\log(2\pi)
-&\quad + n\log \sigma^2
-&\quad + \log \det(I + \alpha S_n)
-&\quad + \text{data-fit terms}
-\Big),
-\end{aligned}
+\log p(D_n) = -\tfrac{1}{2}\Big(n\log(2\pi) + n\log \sigma^2 + \log \det(I + \alpha S_n) + \text{data-fit terms}\Big),
 $$
+
 with $\alpha = \tau^2/\sigma^2$.
 
 the spectrum of $S_n$ has:
@@ -154,14 +148,13 @@ the spectrum of $S_n$ has:
 ### 4.2 effective dimension from eigenvalues
 
 $$
-\log \det(I + \alpha S_n)
-= r \log n + O(1),
+\log \det(I + \alpha S_n) = r \log n + O(1),
 $$
+
 so
+
 $$
-\log p(D_n)
-=
-\log p(D_n \mid \theta^\star) - \frac{r}{2} \log n + O(1).
+\log p(D_n) = \log p(D_n \mid \theta^\star) - \frac{r}{2} \log n + O(1).
 $$
 
 ### 4.3 quantifying the bic error
@@ -201,10 +194,9 @@ the key insight is that effective complexity depends on the intrinsic geometry o
 ## 6. effective dimension and the real log canonical threshold (rlct)
 
 slt shows that
+
 $$
-\log p(D_n)
-=
-\log p(D_n \mid \theta^\star) - \lambda \log n + O(\log \log n).
+\log p(D_n) = \log p(D_n \mid \theta^\star) - \lambda \log n + O(\log \log n).
 $$
 
 $\lambda$, the rlct, is a coordinate-free effective dimension.
