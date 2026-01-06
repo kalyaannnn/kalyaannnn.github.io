@@ -291,7 +291,7 @@ in singular models. this is the precise sense in which bic "over-penalizes" over
 
 ## further reading
 
-- kalyaan rao, "[evidence slopes and effective dimension in singular linear models](https://arxiv.org/abs/2411.19920)," preprint
+- kalyaan rao, "[evidence slopes and effective dimension in singular linear models](https://arxiv.org/abs/2601.01238)," preprint
 - sumio watanabe, *algebraic geometry and statistical learning theory*, cambridge university press, 2009
 - sumio watanabe, *mathematical theory of bayesian statistics*, chapman and hall/crc, 2018
 - gideon schwarz, "estimating the dimension of a model," *the annals of statistics*, 1978
