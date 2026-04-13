@@ -1,6 +1,6 @@
 ---
 title: "rethinking model complexity in overparameterized models"
-date: 2025-01-04
+date: 2026-01-04
 draft: false
 tags: [singular learning theory, bayesian inference, model selection]
 math: true
